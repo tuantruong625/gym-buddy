@@ -4,10 +4,11 @@ import router from './router'
 import store from './store'
 import Reset from '@/assets/css/resets.css'
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faUserSecret } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faHome, faDumbbell, faUser, faCalendar, faBullseye } from '@fortawesome/free-solid-svg-icons'
 
-library.add(faUserSecret)
+
+library.add(faHome, faDumbbell, faUser, faCalendar, faBullseye)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
