@@ -1,16 +1,32 @@
 <template>
 	<div class="exercises">
-		<img class="underConstruction" src="@/assets/under-construction.png" alt>
+		<img class="underConstruction" src="@/assets/under-construction.png">
 		<h1>Exercises Under Construction</h1>
+    {{ exercises }}
 	</div>
 </template>
 
 <script>
-// @ is an alias to /src
+import db from '@/firebase/init'
 
 export default {
-	name: 'exercises',
-	components: {}
+	data() {
+    return {
+      exercises: []
+    }
+  },
+  created() {
+    db.collection('exercises')
+    .get()
+    .then(snapshot => {
+      snapshot.forEach(doc => {
+        let exercise = doc.data()
+        exercise.id = doc.id
+        this.exercises.push(exercise)
+      })
+    })
+  }
+
 }
 </script>
 
