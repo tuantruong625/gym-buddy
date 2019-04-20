@@ -5,7 +5,7 @@
 		</header>
 
 		<div class="muscle-group">
-			<h2 class="muscle-group__header">Select Muscle Group</h2>
+			<!-- <h2 class="muscle-group__header">Select Muscle Group</h2> -->
 			<span v-for="(icon, index) in muscleGroupIcons" :key="index">
 				<button
 					class="muscle-group__button"
@@ -19,12 +19,36 @@
 		</div>
 
 		<div class="exercise-list">
-			<div v-for="exercise in filteredExercise" :key="exercise.id" class="exercise-list__card">
+			<div
+				v-for="exercise in filteredExercise"
+				:key="exercise.id"
+				class="exercise-list__card"
+				@click="show(exercise.name)"
+			>
 				<img class="exercise-list__image" :src="exercise.image" :alt="exercise.name">
 				<h2 class="exercise-list__header">{{ exercise.name }}</h2>
 				<p class="exercise-list__sub-header">{{ exercise.category }}</p>
 			</div>
 		</div>
+
+		<modal
+			class="exercise-details"
+			name="exercise-details"
+			v-for="exercise in renderSelectedExercise"
+			:key="exercise.id"
+			height="500"
+			width="1000"
+		>
+			<img class="exercise-details__image" :src="exercise.image" :alt="exercise.name">
+
+			<div class="exercise-details__info">
+				<span class="exercise-details__header">{{ exercise.name }}</span>
+				<span class="exercise-details__category">{{ exercise.category }}</span>
+				<span class="exercise-details__main-muscle">{{ exercise.mainMuscle }}</span>
+				<span class="exercise-details__secondary-muscle">{{ exercise.secondaryMuscles }}</span>
+				<p class="exercise-details__description">{{ exercise.description }}</p>
+			</div>
+		</modal>
 	</div>
 </template>
 
@@ -37,6 +61,7 @@ export default {
 		return {
 			exercises: [],
 			selectedMuscleGroup: 'all',
+			selectedExercise: '',
 			muscleGroupIcons
 		}
 	},
@@ -48,11 +73,20 @@ export default {
 				}
 				return exercise.category.toLowerCase().includes(this.selectedMuscleGroup.toLowerCase())
 			})
+		},
+		renderSelectedExercise() {
+			return this.exercises.filter(exercise => {
+				return exercise.name.toLowerCase().includes(this.selectedExercise.toLowerCase())
+			})
 		}
 	},
 	methods: {
 		filterExercise(muscleGroup) {
 			this.selectedMuscleGroup = muscleGroup
+		},
+		show(exercise) {
+			this.selectedExercise = exercise
+			this.$modal.show('exercise-details')
 		}
 	},
 	created() {
@@ -156,6 +190,7 @@ export default {
 	grid-template-columns: 1fr 1fr 1fr;
 	padding: 4rem;
 	align-items: center;
+	cursor: pointer;
 
 	&__image {
 		width: 6rem;
@@ -185,6 +220,55 @@ export default {
 		box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
 		padding: 1rem;
 		border-radius: 5px;
+	}
+}
+
+.v--modal-box {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	padding: 3rem;
+	align-items: center;
+	justify-content: center;
+	border-radius: 10px;
+}
+
+.exercise-details {
+	&__image {
+		width: 20rem;
+		height: auto;
+	}
+
+	&__info {
+	}
+
+	&__header {
+		display: block;
+		text-transform: capitalize;
+		font-size: 1.5rem;
+		padding-bottom: 0.5rem;
+	}
+
+	&__category {
+		text-transform: capitalize;
+		padding: 0 1rem 0 0;
+		color: #868e96;
+	}
+
+	&__main-muscle {
+		text-transform: capitalize;
+		padding: 0 1rem 0 0;
+		color: #868e96;
+	}
+
+	&__secondary-muscle {
+		padding: 0 1rem 0 0;
+		text-transform: capitalize;
+		color: #868e96;
+	}
+
+	&__description {
+		padding-top: 1rem;
+		line-height: 1.75;
 	}
 }
 </style>
