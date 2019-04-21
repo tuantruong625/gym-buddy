@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div class="nav">
+		<div class="nav" v-if="['login'].includes($route.name)">
 			<div class="nav__links" v-for="(navItem, index) in navItems" :key="index">
 				<font-awesome-icon class="nav__icon" :icon="navItem.icon"/>
 				<router-link class="nav__link" :to="navItem.route">{{ navItem.pageName }}</router-link>
@@ -47,7 +47,7 @@ export default {
 </script>
 
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
 	display: grid;
 	grid-template-areas: 'nav routerView';
