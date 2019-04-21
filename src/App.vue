@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<div class="nav" v-if="['login'].includes($route.name)">
+		<div class="nav" v-if="showMenu">
 			<div class="nav__links" v-for="(navItem, index) in navItems" :key="index">
 				<font-awesome-icon class="nav__icon" :icon="navItem.icon"/>
 				<router-link class="nav__link" :to="navItem.route">{{ navItem.pageName }}</router-link>
@@ -18,7 +18,7 @@ export default {
 				{
 					pageName: 'Home',
 					icon: 'home',
-					route: '/'
+					route: '/home'
 				},
 				{
 					pageName: 'Exercises',
@@ -41,6 +41,11 @@ export default {
 					route: '/goals'
 				}
 			]
+		}
+	},
+	computed: {
+		showMenu() {
+			return this.$route.name !== 'login'
 		}
 	}
 }
