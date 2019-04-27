@@ -8,12 +8,12 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/',
+      path: '/login',
       name: 'login',
       component: () => import(/* webpackChunkName: "about" */ './views/Login.vue')
     },
     {
-      path: '/home',
+      path: '/',
       name: 'home',
       component: () => import(/* webpackChunkName: "about" */ './views/Home.vue')
     },

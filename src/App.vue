@@ -18,7 +18,7 @@ export default {
 				{
 					pageName: 'Home',
 					icon: 'home',
-					route: '/home'
+					route: '/'
 				},
 				{
 					pageName: 'Exercises',
